@@ -90,31 +90,31 @@ export const signIn = async (req, res, next) => {
       },
     });
   } catch (error) {
-    next(err);
+    next(error);
   }
 };
 
 export const signOut = async (req, res, next) => {
-    try {
-        const accessToken=req.cookies.accessToken;
+  try {
+    const accessToken = req.cookies.accessToken;
 
-        if(!accessToken){
-            const error=new Error('User not logged In');
-            error.statusCode=401;
-            throw error;
-        };
-
-        res.clearCookie('accessToken',{
-            httpOnly:true,
-            secure:process.env.NODE_ENV==='production',
-            sameSite:'strict'
-        });
-
-        res.status(200).json({
-            success:true,
-            message:'Logged Out successful'
-        })
-    } catch (error) {
-        next(error)
+    if (!accessToken) {
+      const error = new Error("User not logged In");
+      error.statusCode = 401;
+      throw error;
     }
+
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Logged Out successful",
+    });
+  } catch (error) {
+    next(error);
+  }
 };
