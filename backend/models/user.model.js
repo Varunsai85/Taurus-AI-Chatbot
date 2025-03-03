@@ -4,15 +4,11 @@ const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: [true, "First name is required"],
       trim: true,
-      minLength: [3, "First name must be at least 3 characters"],
     },
     lastName: {
       type: String,
-      required: [true, "Last name is required"],
       trim: true,
-      minLength: [3, "Last name must be at least 3 characters"],
     },
     email: {
       type: String,
@@ -31,8 +27,6 @@ const userSchema = new mongoose.Schema(
     },
     profilePic: {
       type: String,
-      default:
-        "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
     },
   },
   {
