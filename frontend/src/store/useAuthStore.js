@@ -7,9 +7,11 @@ export const useAuthStore = create((set, get) => ({
   isLoggingIn: false,
   isSigningUp: false,
   isLoggingOut: false,
-  isCheckingAuth: true,
+  isCheckingAuth: false,
+  defAvatar:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
 
   checkAuth: async () => {
+    set({ isCheckingAuth: true });
     try {
       const res = await axiosInstance.get("/auth/check");
       set((state) => ({ ...state, userAuth: res.data.data.user }));

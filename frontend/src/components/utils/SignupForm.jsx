@@ -110,8 +110,9 @@ export function SignupForm({ className, ...props }) {
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
-                    name="email"
-                    type="current-email"
+                    name="username"
+                    type="email"
+                    autoComplete="username"
                     placeholder="m@example.com"
                     onChange={handleChange}
                     required
@@ -131,7 +132,8 @@ export function SignupForm({ className, ...props }) {
                     <Input
                       id="password"
                       name="password"
-                      type={showPassword?"text":"current-password"}
+                      type={showPassword?"text":"password"}
+                      autoComplete="current-password"
                       required
                       onChange={handleChange}
                     />

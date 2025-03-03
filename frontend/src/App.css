@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+@theme{
+  --shadow-border-custom:-2px -2px 0px rgba(0,0,0,0.25);
+}
+
 body{
   padding: 0;
   margin: 0;
@@ -9,4 +13,18 @@ body{
 .roboto-font{
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
+}
+
+.loader-overlay,.avatar-overlay::after{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.avatar-overlay::after{
+  content: "";
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.487);
+  width: 100%;
+  height: 100%;
 }

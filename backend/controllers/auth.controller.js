@@ -49,11 +49,11 @@ export const signIn = async (req, res, next) => {
       error.statusCode = 404;
       throw error;
     }
-    const isPassword = await bcrypt.compare(password, user.password);
+    const isPassword = bcrypt.compare(password, user.password);
 
     if (!isPassword) {
-      const error = new Error("Invalid Password");
-      error.statusCode = 401;
+      const error=new Error("Invalid Credentials");
+      error.statusCode=401;
       throw error;
     }
 

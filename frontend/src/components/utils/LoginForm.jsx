@@ -80,8 +80,11 @@ export function LoginForm({ className, ...props }) {
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
-                    type="current-email"
+                    type="email"
+                    name="username"
+                    autoComplete="username" 
                     placeholder="m@example.com"
+                    
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
@@ -101,7 +104,8 @@ export function LoginForm({ className, ...props }) {
                   <div className="relative">
                     <Input
                       id="password"
-                      type={showPassword ? "text" : "current-password"}
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="current-password"
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
                       }
