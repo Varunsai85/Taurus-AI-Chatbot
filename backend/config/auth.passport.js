@@ -29,6 +29,7 @@ passport.use(
             firstName: profile.name.givenName || "",  
             lastName: profile.name.familyName || "",
             email: profile.emails[0].value,
+            password:null,
             profilePic: profile.photos[0].value,
           });
         }

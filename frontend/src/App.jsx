@@ -43,7 +43,7 @@ function App() {
       >
         {!hideSidebar && <Sidebar />}
 
-        <section className="">
+        <section className="bg-sidebar min-h-screen flex flex-col">
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />

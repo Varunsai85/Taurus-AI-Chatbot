@@ -14,7 +14,7 @@ const Navbar = () => {
   const { createChat } = useMessageStore();
 
   return (
-    <header className="p-3 w-full bg-sidebar box-border min-h-[5vh] sticky top-0 backdrop-blur-lg">
+    <header className="p-3 w-full bg-sidebar/10 box-border min-h-[5vh] sticky top-0 backdrop-blur-[10px] z-30">
       <nav className="justify-between flex items-center w-full">
         <div className="flex items-center gap-3 justify-center">
           {collapse && (
@@ -27,9 +27,9 @@ const Navbar = () => {
           )}
 
           <Link to="/">
-            <span className="flex gap-1">
+            <span className="flex gap-1 items-center">
               <span className="text-xl font-bold">Taurus AI</span>
-              <span className="text-xs font-extralight text-primary/50">
+              <span className="text-xs font-extralight text-primary/50 self-baseline">
                 PB Gemini
               </span>
             </span>
