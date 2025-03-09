@@ -7,6 +7,9 @@ import errorHandler from "./middlewares/error.middleware.js";
 import cors from "cors";
 import messageRoutes from "./routes/message.route.js";
 import path from "path";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const __dirname = path.resolve();
