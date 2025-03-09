@@ -16,7 +16,7 @@ const Sidebar = () => {
     getMessages,
     createChat,
     isCreatingChat,
-    selectMessage
+    selectMessage,
   } = useMessageStore();
 
   useEffect(() => {
@@ -30,8 +30,6 @@ const Sidebar = () => {
       getMessages();
     }
   }, [isCreatingChat]);
-
-
 
   return (
     <aside
@@ -57,21 +55,32 @@ const Sidebar = () => {
                 <span className="text-primary/50">Loading Chat History</span>
               </div>
             ) : userAuth ? (
-              <div className="flex flex-col">
-                {messages.map((item) => (
-                  <div
-                    key={item._id}
-                    className="rounded-md hover:bg-sidebar/90 overflow-ellipsis p-2 overflow-hidden transition-all duration-100 ease-in-out cursor-pointer"
-                    onClick={()=>selectMessage(item._id)}
-                  >
-                    {item.responses.length > 0 ? (
-                      item.responses[item.responses.length - 1].response
-                    ) : (
-                      <span>New Chat</span>
-                    )}
+              messages.length == 0 ? (
+                <>
+                  <div className="flex-1 flex gap-1 justify-center items-center">
+                    Create New Chat
+                    <Button variant={"ghost"} size={"md"} onClick={createChat}>
+                      <PenBox className="size-5" />
+                    </Button>
                   </div>
-                ))}
-              </div>
+                </>
+              ) : (
+                <div className="flex flex-col">
+                  {messages.map((item) => (
+                    <div
+                      key={item._id}
+                      className="rounded-md hover:bg-sidebar/90 overflow-ellipsis p-2 overflow-hidden transition-all duration-100 ease-in-out cursor-pointer"
+                      onClick={() => selectMessage(item._id)}
+                    >
+                      {item.responses.length > 0 ? (
+                        item.responses[item.responses.length - 1].response
+                      ) : (
+                        <span>New Chat</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )
             ) : (
               <>
                 <div className="flex-1 flex flex-col items-center justify-center gap-3">

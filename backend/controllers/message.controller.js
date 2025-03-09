@@ -67,4 +67,22 @@ export const sendPrompt=async(req,res,next)=>{
     } catch (error) {
         next(error)
     }
-}
+};
+
+export const sendBupPrompt=async(req,res,next)=>{
+    const {prompt}=req.body;
+    try {
+        const response=await generateResponse(prompt)
+        const responseText=response.response.text();
+
+        res.status(200).json({
+            success:true,
+            message:"Response generated",
+            data:{
+                response:responseText
+            }
+        })
+    } catch (error) {
+        next(error)
+    }
+};

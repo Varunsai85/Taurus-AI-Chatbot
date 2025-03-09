@@ -2,32 +2,43 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMessageStore } from "@/store/useMessageStore";
 import { ArrowUp } from "lucide-react";
-import {  useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const HomePage = () => {
-  const { responses, sendResponse, getMessages } = useMessageStore();
+  const { responses, sendResponse, getMessages, currentMessageId } =
+    useMessageStore();
   const { userAuth, defAvatar } = useAuthStore();
   const [formData, setFormData] = useState({
     prompt: "",
   });
 
+  const validateForm = () => {
+    if (formData.prompt.trim().length === 0) {
+      toast.error("Prompt can't be empty");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await sendResponse(formData);
-      setFormData({ prompt: "" });
-      await getMessages();
+      if (validateForm()) {
+        setFormData({ prompt: "" });
+        await sendResponse(formData);
+        await getMessages();
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || "prompt failed");
     }
   };
 
-  console.log(formData);
+  console.log(responses);
   return (
     <main className="flex-1 box-border">
       <section className="relative rounded-lg flex-1 h-full flex flex-col">
-        {responses.length !== 0 ? (
+        {responses.length !== 0 && currentMessageId ? (
           <>
             <div className="p-3 h-full overflow-y-auto space-y-3 px-6">
               {responses.map((response) => (
@@ -35,7 +46,7 @@ const HomePage = () => {
                   <div className="flex flex-col box-border gap-3 w-full">
                     {/*Prompt */}
                     <div className="flex items-center gap-1 justify-end w-full">
-                      <span className="py-2 px-4 bg-accent rounded-lg max-w-[80%] overflow-auto">
+                      <span className="py-2 px-4 bg-secondary rounded-xl rounded-br-none max-w-[80%] overflow-auto">
                         {response.prompt}
                       </span>
                       <div className="self-end min-w-5">
@@ -55,7 +66,7 @@ const HomePage = () => {
                           alt={userAuth?.email || "alt"}
                         />
                       </div>
-                      <span className="py-2 px-4 bg-accent rounded-lg max-w-[80%]">
+                      <span className="py-2 px-4 bg-secondary rounded-xl rounded-bl-none max-w-[80%]">
                         {response.response}
                       </span>
                     </div>
@@ -72,6 +83,7 @@ const HomePage = () => {
                   type="text"
                   placeholder="Ask Anything"
                   className="outline-none w-full p-2"
+                  value={formData.prompt}
                   onChange={(e) =>
                     setFormData({ ...formData, prompt: e.target.value })
                   }

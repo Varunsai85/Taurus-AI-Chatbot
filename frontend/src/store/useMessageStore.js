@@ -1,32 +1,49 @@
 import { axiosInstance } from "@/lib/axios";
 import { create } from "zustand";
 
-export const useMessageStore = create((set,get) => ({
+export const useMessageStore = create((set, get) => ({
   isMessagesLoading: false,
   isCreatingChat: false,
   isResponseLoading: false,
-  currentMessageId:null,
-  isSendingPrompt:false,
+  currentMessageId: null,
+  isSendingPrompt: false,
   messages: [],
   responses: [],
 
-  sendResponse:async(data)=>{
-    set({isResponseLoading:true});
+  sendResponse: async (data) => {
+    set({ isResponseLoading: true });
     try {
-      await axiosInstance.post(`/messages/send/${get().currentMessageId}`,data);
+      await axiosInstance.post(
+        `/messages/send/${get().currentMessageId}`,
+        data
+      );
     } catch (error) {
-      console.error("Error in sending response",error);
-      set({isResponseLoading:false});
-    }finally{
-      set({isResponseLoading:false});
+      console.error("Error in sending response", error);
+      set({ isResponseLoading: false });
+    } finally {
+      set({ isResponseLoading: false });
     }
   },
 
-  selectMessage:(id)=>{
-    set((state)=>{
-      const selectMessage=state.messages.find((msg)=>msg._id===id);
-      return {...state,currentMessageId:id,responses:selectMessage?selectMessage.responses:[]};
-    })
+  dummyResponse: async () => {
+    set({ isResponseLoading: true });
+    try {
+      await axiosInstance.post("/messages/sendDummy");
+    } catch (error) {
+      console.error("Error in sending dummy response", error);
+      set({ isResponseLoading: false });
+    } finally {
+      set({ isResponseLoading: false });
+    }
+  },
+
+  selectMessage: (id) => {
+    try {
+      localStorage.setItem("messageId", id);
+      set((state) => ({ ...state, currentMessageId: localStorage.getItem("messageId") }));
+    } catch (error) {
+      console.error("Error selecting message Id:", error);
+    }
   },
 
   getMessages: async () => {
@@ -34,12 +51,8 @@ export const useMessageStore = create((set,get) => ({
     try {
       const res = await axiosInstance.get("/messages/getMessages");
       set((state) => ({ ...state, messages: res.data.data.messages }));
-      if (res.data.data.messages.length > 0) {
-        set({
-          selectedMessageId: res.data.data.messages[0]._id,
-          responses: res.data.data.messages[0].responses,
-        });
-      }
+      const selectedMessage=res.data.data.messages.filter((msg)=>{return msg._id===get().currentMessageId});
+      console.log("selected Message:",selectedMessage);
     } catch (error) {
       console.error("Error fetching messages:", error);
       set({ loadingMessages: false });
