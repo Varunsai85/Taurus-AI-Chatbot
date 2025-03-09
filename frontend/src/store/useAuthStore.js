@@ -53,7 +53,7 @@ export const useAuthStore = create((set, get) => ({
 
   googleLogin: async () => {
     try {
-      window.location.href = `http://localhost:5001/api/auth/google`;
+      window.location.href = `${import.meta.env.MODE==="development"?"http://localhost:5001/":"https://taurus-ai.onrender.com/"}api/auth/google`;
     } catch (error) {
       console.log("Google login error", error);
       toast.error(
