@@ -39,11 +39,11 @@ function App() {
     <>
       <main
         className={`${
-          !hideSidebar && "grid grid-cols-[auto_1fr]"
+          !hideSidebar && "grid sm:grid-cols-[auto_1fr]"
         } transition-colors duration-500 ease-in-out box-border`}
       >
-        {!hideSidebar && <Sidebar />}
-
+        {!hideSidebar && <Sidebar/>}
+        
         <section className="bg-sidebar min-h-screen flex flex-col box-border w-full">
           <Navbar />
           <Routes>

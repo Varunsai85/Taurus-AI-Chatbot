@@ -8,10 +8,10 @@ const SidebarTrigger = () => {
   return (
     <Button
       variant={"ghost"}
-      size={"md"}
+      size={"smResp"}
       onClick={togggleCollapse}
     >
-      <Sidebar className="size-5" />
+      <Sidebar className="size-5 max-sm:size-4" />
     </Button>
   );
 };

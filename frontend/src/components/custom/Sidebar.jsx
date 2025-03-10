@@ -33,8 +33,8 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`text-nowrap transition-[width,padding] ease-in-out duration-500 overflow-hidden box-border bg-primary/0 min-h-screen sticky self-start h-screen top-0 left-0 rounded-br-md overflow-y-scroll ${
-        collapse ? "w-0" : "w-[18vw]"
+      className={`text-nowrap transition-[width,padding] ease-in-out duration-500 overflow-hidden box-border bg-secondary min-h-screen sm:sticky self-start h-screen top-0 left-0 rounded-br-md overflow-y-scroll fixed z-50 ${
+        collapse ? "w-0" : "lg:w-[18vw] w-[23vw] max-sm:w-[50vw]"
       }`}
       style={{
         boxShadow: "inset -2px -2px 0px rgba(0, 0, 0, 0.2)",
@@ -44,8 +44,8 @@ const Sidebar = () => {
         <div className="flex flex-col gap-2 flex-1">
           <div className="flex justify-between items-center">
             <SidebarTrigger />
-            <Button variant={"ghost"} size={"md"} onClick={createChat}>
-              <PenBox className="size-5" />
+            <Button variant={"ghost"} size={"smResp"} onClick={createChat}>
+              <PenBox className="size-5 max-sm:size-4" />
             </Button>
           </div>
           <div className="flex flex-col flex-1">
