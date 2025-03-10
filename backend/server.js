@@ -21,6 +21,10 @@ app.use(
   })
 );
 
+app.get("/",(req,res)=>{
+  res.send("Hello to Taurus AI backend server")
+})
+
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
