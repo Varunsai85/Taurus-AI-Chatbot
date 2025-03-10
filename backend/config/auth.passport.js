@@ -10,6 +10,8 @@ import {
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import {v4 as uuidv4} from "uuid";
+import bcrypt from "bcryptjs";
 
 dotenv.config();
 
@@ -31,11 +33,14 @@ passport.use(
         let user = await User.findOne({ email: profile.emails[0].value });
 
         if (!user) {
+          const dumPassword=uuidv4();
+          const salt=await bcrypt.genSalt(10);
+          const hashedPassword=await bcrypt.hash(dumPassword,salt)
           user = await User.create({
             firstName: profile.name.givenName || "",
             lastName: profile.name.familyName || "",
             email: profile.emails[0].value,
-            password: null,
+            password: hashedPassword,
             profilePic: profile.photos[0].value,
           });
         }
