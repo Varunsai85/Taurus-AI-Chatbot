@@ -53,7 +53,7 @@ export const useAuthStore = create((set, get) => ({
 
   googleLogin: async () => {
     try {
-      window.location.href = `${import.meta.env.MODE==="development"?"http://localhost:5001":import.meta.env.BACKEND_URL}/api/auth/google`;
+      window.location.href = `${import.meta.env.MODE==="development"?"http://localhost:5001":import.meta.env.VITE_BACKEND_URL}/api/auth/google`;
     } catch (error) {
       console.log("Google login error", error);
       toast.error(
