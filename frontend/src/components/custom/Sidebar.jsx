@@ -73,7 +73,7 @@ const Sidebar = () => {
                       onClick={() => selectMessage(item._id)}
                     >
                       {item.responses.length > 0 ? (
-                        item.responses[item.responses.length - 1].response
+                        item.responses[0].response
                       ) : (
                         <span>New Chat</span>
                       )}
