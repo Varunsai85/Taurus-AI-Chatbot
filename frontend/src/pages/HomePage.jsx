@@ -6,8 +6,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const HomePage = () => {
-  const { responses, sendResponse, getMessages, currentMessageId,isResponseLoading } =
-    useMessageStore();
+  const {
+    responses,
+    sendResponse,
+    currentMessageId,
+    isResponseLoading,
+    getResponses,
+  } = useMessageStore();
   const { userAuth, defAvatar } = useAuthStore();
   const [formData, setFormData] = useState({
     prompt: "",
@@ -27,13 +32,13 @@ const HomePage = () => {
       if (validateForm()) {
         setFormData({ prompt: "" });
         await sendResponse(formData);
-        await getMessages();
+        await getResponses();
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "prompt failed");
     }
   };
-  
+
   return (
     <main className="flex-1 box-border">
       <section className="relative rounded-lg flex-1 h-full flex flex-col">
@@ -87,7 +92,12 @@ const HomePage = () => {
                     setFormData({ ...formData, prompt: e.target.value })
                   }
                 />
-                <Button type="submit" className={"rounded-full"} size={"icon"} disabled={isResponseLoading}>
+                <Button
+                  type="submit"
+                  className={"rounded-full"}
+                  size={"icon"}
+                  disabled={isResponseLoading}
+                >
                   <ArrowUp className="size-5 font-bold" />
                 </Button>
               </form>
@@ -109,7 +119,12 @@ const HomePage = () => {
                     setFormData({ ...formData, prompt: e.target.value })
                   }
                 />
-                <Button type="submit" className={"rounded-full"} size={"icon"} disabled={isResponseLoading}>
+                <Button
+                  type="submit"
+                  className={"rounded-full"}
+                  size={"icon"}
+                  disabled={isResponseLoading}
+                >
                   <ArrowUp className="size-5 font-bold" />
                 </Button>
               </form>

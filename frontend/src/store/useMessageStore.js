@@ -10,6 +10,34 @@ export const useMessageStore = create((set, get) => ({
   messages: [],
   responses: [],
 
+  
+  dummyResponse: async () => {
+    set({ isResponseLoading: true });
+    try {
+      await axiosInstance.post("/messages/sendDummy");
+    } catch (error) {
+      console.error("Error in sending dummy response", error);
+      set({ isResponseLoading: false });
+    } finally {
+      set({ isResponseLoading: false });
+    }
+  },
+  
+  selectMessage: (id) => {
+    try {
+      localStorage.setItem("messageId", id);
+      set((state) => {
+        const selectedMessage = state.messages.find((msg) => msg._id === id);
+        return {
+          currentMessageId: localStorage.getItem("messageId"),
+          responses: selectedMessage ? selectedMessage.responses : [],
+        };
+      });
+    } catch (error) {
+      console.error("Error selecting message Id:", error);
+    }
+  },
+  
   sendResponse: async (data) => {
     set({ isResponseLoading: true });
     try {
@@ -25,30 +53,20 @@ export const useMessageStore = create((set, get) => ({
     }
   },
 
-  dummyResponse: async () => {
-    set({ isResponseLoading: true });
+  getResponse:async()=>{
     try {
-      await axiosInstance.post("/messages/sendDummy");
-    } catch (error) {
-      console.error("Error in sending dummy response", error);
-      set({ isResponseLoading: false });
-    } finally {
-      set({ isResponseLoading: false });
-    }
-  },
+      const res = await axiosInstance.get("/messages/getMessages");
+      const messages = res.data.data.messages;
+      const currentMsg = messages.find(
+        (msg) => msg._id === get().currentMessageId
+      );
 
-  selectMessage: (id) => {
-    try {
-      localStorage.setItem("messageId", id);
-      set((state) => {
-        const selectedMessage = state.messages.find((msg) => msg._id === id);
-        return {
-          currentMessageId: localStorage.getItem("messageId"),
-          responses: selectedMessage ? selectedMessage.responses : [],
-        };
-      });
+      set((state) => ({
+        ...state,
+        responses: currentMsg ? currentMsg.responses : [],
+      }));
     } catch (error) {
-      console.error("Error selecting message Id:", error);
+      console.error("Error fetching responses:", error);
     }
   },
 
