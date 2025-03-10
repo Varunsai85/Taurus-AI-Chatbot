@@ -50,9 +50,9 @@ const HomePage = () => {
                   <div className="flex flex-col box-border gap-3 w-full">
                     {/*Prompt */}
                     <div className="flex items-center gap-1 justify-end w-full">
-                      <span className="py-2 px-4 bg-secondary rounded-xl rounded-tr-none max-w-[80%] overflow-auto">
+                      <div className="py-2 px-4 bg-secondary rounded-xl rounded-tr-none max-w-[80%]">
                         {response.prompt}
-                      </span>
+                      </div>
                       <div className="self-start min-w-5">
                         <img
                           className="object-cover h-5 w-5 rounded-full"
