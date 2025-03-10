@@ -53,7 +53,7 @@ export const useMessageStore = create((set, get) => ({
     }
   },
 
-  getResponse:async()=>{
+  getResponses:async()=>{
     try {
       const res = await axiosInstance.get("/messages/getMessages");
       const messages = res.data.data.messages;
