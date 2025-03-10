@@ -4,6 +4,8 @@ import { useMessageStore } from "@/store/useMessageStore";
 import { ArrowUp } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const HomePage = () => {
   const {
@@ -50,10 +52,10 @@ const HomePage = () => {
                   <div className="flex flex-col box-border gap-3 w-full">
                     {/*Prompt */}
                     <div className="flex items-center gap-1 justify-end w-full">
-                      <span className="py-2 px-4 bg-secondary rounded-xl rounded-br-none max-w-[80%] overflow-auto">
+                      <span className="py-2 px-4 bg-secondary rounded-xl rounded-tr-none max-w-[80%] overflow-auto">
                         {response.prompt}
                       </span>
-                      <div className="self-end min-w-5">
+                      <div className="self-start min-w-5">
                         <img
                           className="object-cover h-5 w-5 rounded-full"
                           src={userAuth?.profilePic || defAvatar}
@@ -63,22 +65,22 @@ const HomePage = () => {
                     </div>
                     {/*Response */}
                     <div className="flex items-center gap-2 w-full">
-                      <div className="self-end min-w-5">
+                      <div className="self-start min-w-5">
                         <img
                           className="object-cover h-5 w-5 rounded-full"
                           src={"/TaurusAI.png"}
                           alt={userAuth?.email || "alt"}
                         />
                       </div>
-                      <span className="py-2 px-4 bg-secondary rounded-xl rounded-bl-none max-w-[80%]">
+                      <div className="py-2 px-4 bg-secondary rounded-xl rounded-tl-none max-w-[80%]">
                         {response.response}
-                      </span>
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="bg-sidebar sticky bottom-0 z-10 p-2 w-full">
+            <div className="bg-sidebar sticky bottom-0 z-10 p-2 w-full border-t-2">
               <form
                 onSubmit={handleSubmit}
                 className="rounded-4xl p-2 flex w-full z-10 bg-secondary focus-within:ring-2 focus-within:ring-primary/50"
