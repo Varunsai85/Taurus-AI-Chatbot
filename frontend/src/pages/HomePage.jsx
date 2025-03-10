@@ -4,8 +4,6 @@ import { useMessageStore } from "@/store/useMessageStore";
 import { ArrowUp } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 const HomePage = () => {
   const {
@@ -13,7 +11,7 @@ const HomePage = () => {
     sendResponse,
     currentMessageId,
     isResponseLoading,
-    getResponses,
+    getMessages,
   } = useMessageStore();
   const { userAuth, defAvatar } = useAuthStore();
   const [formData, setFormData] = useState({
@@ -34,7 +32,7 @@ const HomePage = () => {
       if (validateForm()) {
         setFormData({ prompt: "" });
         await sendResponse(formData);
-        await getResponses();
+        await getMessages();
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "prompt failed");
@@ -42,8 +40,8 @@ const HomePage = () => {
   };
 
   return (
-    <main className="flex-1 box-border">
-      <section className="relative rounded-lg flex-1 h-full flex flex-col">
+    <main className="flex flex-col w-full h-screen flex-1">
+      <section className="rounded-lg flex-1 relative flex flex-col flex-grow h-full box-border overflow-hidden">
         {responses.length !== 0 && currentMessageId && userAuth ? (
           <>
             <div className="p-3 h-full overflow-y-auto space-y-3 px-6">
@@ -110,7 +108,7 @@ const HomePage = () => {
             <div className="flex justify-center items-center flex-1 h-full">
               <form
                 onSubmit={handleSubmit}
-                className="rounded-4xl bg-primary/10 p-3 w-[60%] flex focus-within:ring-2 focus-within:ring-primary/50"
+                className="rounded-4xl bg-primary/10 p-3 w-[90%] sm:w-[60%] flex focus-within:ring-2 focus-within:ring-primary/50"
               >
                 <input
                   type="text"

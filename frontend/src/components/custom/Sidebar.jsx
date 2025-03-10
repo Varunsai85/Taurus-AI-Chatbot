@@ -33,14 +33,16 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`text-nowrap transition-[width,padding] ease-in-out duration-500 overflow-hidden box-border bg-secondary min-h-screen sm:sticky self-start h-screen top-0 left-0 rounded-br-md overflow-y-scroll fixed z-50 ${
+      className={`text-nowrap transition-[width,padding] ease-in-out duration-500 overflow-hidden box-border bg-secondary h-screen sm:sticky top-0 left-0 rounded-br-md overflow-y-scroll fixed z-50 ${
         collapse ? "w-0" : "lg:w-[18vw] w-[23vw] max-sm:w-[50vw]"
       }`}
       style={{
+        minHeight: "100vh",
+        height: "100vh",
         boxShadow: "inset -2px -2px 0px rgba(0, 0, 0, 0.2)",
       }}
     >
-      <nav className="flex min-w-[18vw] flex-col pt-4 p-2 justify-between min-h-screen">
+      <nav className="flex min-w-[18vw] flex-col pt-4 p-2 justify-between h-screen flex-grow">
         <div className="flex flex-col gap-2 flex-1">
           <div className="flex justify-between items-center">
             <SidebarTrigger />
