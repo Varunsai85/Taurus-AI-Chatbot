@@ -5,7 +5,7 @@ export const useMessageStore = create((set, get) => ({
   isMessagesLoading: false,
   isCreatingChat: false,
   isResponseLoading: false,
-  currentMessageId: null,
+  currentMessageId: localStorage.getItem("messageId") || null,
   isSendingPrompt: false,
   messages: [],
   responses: [],
@@ -40,7 +40,13 @@ export const useMessageStore = create((set, get) => ({
   selectMessage: (id) => {
     try {
       localStorage.setItem("messageId", id);
-      set((state) => ({ ...state, currentMessageId: localStorage.getItem("messageId") }));
+      set((state) => {
+        const selectedMessage = state.messages.find((msg) => msg._id === id);
+        return {
+          currentMessageId: localStorage.getItem("messageId"),
+          responses: selectedMessage ? selectedMessage.responses : [],
+        };
+      });
     } catch (error) {
       console.error("Error selecting message Id:", error);
     }
@@ -50,9 +56,16 @@ export const useMessageStore = create((set, get) => ({
     set({ isMessagesLoading: true });
     try {
       const res = await axiosInstance.get("/messages/getMessages");
-      set((state) => ({ ...state, messages: res.data.data.messages }));
-      const selectedMessage=res.data.data.messages.filter((msg)=>{return msg._id===get().currentMessageId});
-      console.log("selected Message:",selectedMessage);
+      const messages = res.data.data.messages;
+      const currentMsg = messages.find(
+        (msg) => msg._id === get().currentMessageId
+      );
+
+      set((state) => ({
+        ...state,
+        messages,
+        responses: currentMsg ? currentMsg.responses : [],
+      }));
     } catch (error) {
       console.error("Error fetching messages:", error);
       set({ loadingMessages: false });

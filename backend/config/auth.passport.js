@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
 import {
+  BACKEND_URL,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   JWT_EXPIRY,
@@ -8,6 +9,9 @@ import {
 } from "./env.js";
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const googleStrategy = Strategy;
 
@@ -16,7 +20,9 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:5001/api/auth/google/callback",
+      callbackURL: `${
+        process.env.NODE_ENV === "development" ? "http://localhost:5001"
+      :BACKEND_URL}/api/auth/google/callback`,
       scope: ["profile", "email"],
       passReqToCallback: true,
     },
@@ -26,10 +32,10 @@ passport.use(
 
         if (!user) {
           user = await User.create({
-            firstName: profile.name.givenName || "",  
+            firstName: profile.name.givenName || "",
             lastName: profile.name.familyName || "",
             email: profile.emails[0].value,
-            password:null,
+            password: null,
             profilePic: profile.photos[0].value,
           });
         }

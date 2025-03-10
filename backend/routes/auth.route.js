@@ -11,7 +11,7 @@ authRoutes.post("/sign-in",signIn);
 authRoutes.post("/sign-out",signOut);
 authRoutes.get("/google",passport.authenticate('google',{scope:['profile','email'],session:false}));
 authRoutes.get("/google/callback",passport.authenticate('google',{failureRedirect:"/login",session:false}),function(req,res){
-    res.redirect(`${process.env.NODE_ENV==="development"?"http:localhost:5173/":FRONTEND_URL}?success=true`);
+    res.redirect(`${process.env.NODE_ENV==="development"?"http://localhost:5173":FRONTEND_URL}/?success=true`);
 });
 authRoutes.get("/check",protectRoute,checkAuth);
 

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "./store/useAuthStore";
 import Sidebar from "./components/custom/Sidebar";
 import { useMessageStore } from "./store/useMessageStore";
+import NotFound from "./components/custom/NotFound";
 
 function App() {
   const { handleGoogleCallback, checkAuth, userAuth } = useAuthStore();
@@ -32,7 +33,7 @@ function App() {
   }, [userAuth]);
 
   const hideSidebar =
-    location.pathname === "/login" || location.pathname === "/signup";
+    location.pathname!=="/";
 
   return (
     <>
@@ -55,6 +56,7 @@ function App() {
               path="/signup"
               element={!userAuth ? <SignupPage /> : <Navigate to={"/"} />}
             />
+            <Route path="*" element={<NotFound/>}/>
           </Routes>
         </section>
       </main>

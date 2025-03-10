@@ -6,7 +6,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const HomePage = () => {
-  const { responses, sendResponse, getMessages, currentMessageId } =
+  const { responses, sendResponse, getMessages, currentMessageId,isResponseLoading } =
     useMessageStore();
   const { userAuth, defAvatar } = useAuthStore();
   const [formData, setFormData] = useState({
@@ -33,12 +33,11 @@ const HomePage = () => {
       toast.error(error.response?.data?.message || "prompt failed");
     }
   };
-
-  console.log(responses);
+  
   return (
     <main className="flex-1 box-border">
       <section className="relative rounded-lg flex-1 h-full flex flex-col">
-        {responses.length !== 0 && currentMessageId ? (
+        {responses.length !== 0 && currentMessageId && userAuth ? (
           <>
             <div className="p-3 h-full overflow-y-auto space-y-3 px-6">
               {responses.map((response) => (
@@ -88,7 +87,7 @@ const HomePage = () => {
                     setFormData({ ...formData, prompt: e.target.value })
                   }
                 />
-                <Button type="submit" className={"rounded-full"} size={"icon"}>
+                <Button type="submit" className={"rounded-full"} size={"icon"} disabled={isResponseLoading}>
                   <ArrowUp className="size-5 font-bold" />
                 </Button>
               </form>
@@ -110,7 +109,7 @@ const HomePage = () => {
                     setFormData({ ...formData, prompt: e.target.value })
                   }
                 />
-                <Button type="submit" className={"rounded-full"} size={"icon"}>
+                <Button type="submit" className={"rounded-full"} size={"icon"} disabled={isResponseLoading}>
                   <ArrowUp className="size-5 font-bold" />
                 </Button>
               </form>

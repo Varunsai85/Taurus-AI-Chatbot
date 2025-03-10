@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 
-config({ path: `../.env.${process.env.NODE_ENV || "development"}.local` });
+config({ path: `.env.${process.env.NODE_ENV || "development"}.local` });
 
 export const {
   PORT,
@@ -10,5 +10,6 @@ export const {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   GEMINI_API_KEY,
-  FRONTEND_URL
+  FRONTEND_URL,
+  BACKEND_URL
 } = process.env;
