@@ -1,6 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import { FRONTEND_URL, PORT } from "./config/env.js";
+import { FRONTEND_URL } from "./config/env.js";
 import { connectDB } from "./database/db.js";
 import authRoutes from "./routes/auth.route.js";
 import errorHandler from "./middlewares/error.middleware.js";
@@ -29,6 +29,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
 app.use(errorHandler);
+
+const PORT=process.env.PORT || 10000
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
