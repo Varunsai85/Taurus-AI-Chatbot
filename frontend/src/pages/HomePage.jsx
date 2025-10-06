@@ -4,6 +4,7 @@ import { useMessageStore } from "@/store/useMessageStore";
 import { ArrowUp } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import ReactMarkdown from "react-markdown";
 
 const HomePage = () => {
   const {
@@ -71,7 +72,7 @@ const HomePage = () => {
                         />
                       </div>
                       <div className="py-2 px-4 bg-secondary rounded-xl rounded-tl-none max-w-[80%]">
-                        {response.response}
+                        <ReactMarkdown>{response.response}</ReactMarkdown>
                       </div>
                     </div>
                   </div>
