@@ -4,6 +4,7 @@ import { useMessageStore } from "@/store/useMessageStore";
 import { ArrowUp } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import ReactMakdown from "react-markdown"
 
 const HomePage = () => {
   const {
@@ -41,7 +42,7 @@ const HomePage = () => {
 
   return (
     <main className="flex flex-col w-full h-screen flex-1">
-      <section className="rounded-lg flex-1 relative flex flex-col flex-grow h-full box-border">
+      <section className="rounded-lg flex-1 relative flex flex-col grow h-full box-border">
         {responses.length !== 0 && currentMessageId && userAuth ? (
           <>
             <div className="p-3 h-full overflow-y-auto space-y-3 px-6">
@@ -71,7 +72,7 @@ const HomePage = () => {
                         />
                       </div>
                       <div className="py-2 px-4 bg-secondary rounded-xl rounded-tl-none max-w-[80%]">
-                        {response.response}
+                        <ReactMakdown>{response.response}</ReactMakdown>
                       </div>
                     </div>
                   </div>
